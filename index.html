@@ -8,6 +8,7 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <style>
@@ -29,10 +30,10 @@
 							class="elevation-1"
 						>
 						<template v-slot:item.edit="{ item }">
-							<i class="bi-pencil"></i>
+							<i class="bi-pencil" @click="editContact(item)"></i>
 						</template>
 						<template v-slot:item.delete="{ item }">
-							<i class="bi-trash"></i>
+							<i class="bi-trash" @click="deleteContact(item)"></i>
 						</template>
 					</v-data-table>
 				</v-container>
@@ -60,16 +61,16 @@
                       <v-text-field
 												label="Nome e sobrenome*"
 												required
-												:counter="7"
-												:rules="nameRules" 
-												v-model="name"></v-text-field>
+												:rules="nameRules"
+												v-model="name">
+											</v-text-field>
 										<!-- <v-col cols="12" sm="6" md="4"> -->
 										<!-- </v-col> -->
-                      	<v-text-field 
+												<v-text-field 
 													label="Telefone*" 
 													required 
-													type="number"
 													single-line
+													type="number"
 													:counter="11"
 													:rules="phoneRules"
 													v-model="telefone"
@@ -106,6 +107,7 @@
           message: 'Hola Mundo',
 					name: '',
 					telefone: '',
+					id: 4,
 					dialog: false,
 					phoneRules: [
 						v => !!v || 'Phone number is required',
@@ -114,11 +116,15 @@
 					nameRules: [
         		v => !!v || 'Name is required',
 						v => {
-							const wordsList = v.split(" ") || [];
-							const minTwoWordsWith3Characters = (wordsList.length < 2 
-								|| wordsList[0].length < 3
-								|| wordsList[1].length < 3);
-							return !minTwoWordsWith3Characters || 'Name must have two words with 3 characters';
+							if(v) {
+								const wordsList = v.split(" ") || [];
+								const minTwoWordsWith3Characters = (wordsList.length < 2 
+									|| wordsList[0].length < 3
+									|| wordsList[1].length < 3);
+
+								return !minTwoWordsWith3Characters 
+									|| 'Name must have two words with 3 characters';
+							}
 						},
       		],
 					valid: true,
@@ -157,9 +163,12 @@
 			methods: {
 				saveBtn () {
 					const result = this.$refs.form.validate()
-					console.log(result)
+					console.log(this.desserts)
 					if(result) {
-						this.desserts.push({name: this.name, telefone: this.telefone})
+						this.desserts.push({
+							id: this.id += 1,
+							name: this.name, telefone: this.telefone
+						})
 						this.$refs.form.reset()
 						this.dialog = false;
 					}
@@ -172,6 +181,16 @@
 				closeBtn() {
 					this.dialog = false
 					this.reset()
+				},
+
+				editContact(a) {
+					let result = this.desserts.find((x) => x.id != a.id)
+					this.desserts = result;
+				},
+				
+				deleteContact(a) {
+					let result = this.desserts.filter((x) => x.id != a.id)
+					this.desserts = result;
 				}
 			},
 
