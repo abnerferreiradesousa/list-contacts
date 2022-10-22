@@ -3,11 +3,11 @@
 
 <head>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
@@ -16,97 +16,81 @@
 </style>
 
 <body>
-  <div id="app">
-    <v-app>
-      <v-main>
-        <v-container>
+	<div id="app">
+		<v-app>
+			<v-main>
+				<v-container>
 					<v-row justify="center">
 						<h1>Lista de Contatos</h1>
 					</v-row>
-						<v-data-table
-							:headers="headers"
-							:items="desserts"
-							:items-per-page="10"
-							class="elevation-1"
-						>
-						<template v-slot:item.edit="{ item }">
-							<i class="bi-pencil" @click="editContact(item)"></i>
+					<v-data-table :headers="headers" :items="desserts" :items-per-page="10" class="elevation-1">
+						<template v-slot:item.buttons="{ item }">
+							<button type="button" style="margin-right: 5rem;">
+								<i class="bi-pencil" @click="editContact(item)"></i>
+							</button>
+							<button type="button">
+								<i class="bi-trash" @click="deleteContact(item)"></i>
+							</button>
 						</template>
-						<template v-slot:item.delete="{ item }">
-							<i class="bi-trash" @click="deleteContact(item)"></i>
-						</template>
+						<!-- <template v-slot:item.delete="{ item }"> -->
+						<!-- </template> -->
 					</v-data-table>
 				</v-container>
-        <v-row justify="center">
-          <v-dialog v-model="dialog" persistent max-width="600px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                ADICIONAR
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">Novo Contato</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <!-- <v-row> -->
-                    <!-- <v-col cols="12" sm="6" md="4"> -->
-                    <!-- </v-col> -->
-										<v-form
-										ref="form"
-										v-model="valid"
-										lazy-validation
-									>
-                      <v-text-field
-												label="Nome e sobrenome*"
-												required
-												:rules="nameRules"
-												v-model="name">
-											</v-text-field>
-										<!-- <v-col cols="12" sm="6" md="4"> -->
-										<!-- </v-col> -->
-												<v-text-field 
-													label="Telefone*" 
-													required 
-													single-line
-													type="number"
-													:counter="11"
-													:rules="phoneRules"
-													v-model="telefone"
-												></v-text-field>
-											</v-form>
-                  <!-- </v-row> -->
-                </v-container>
-                <small>*indicates required field</small>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeBtn">
-                  Close
-                </v-btn>
-                <v-btn color="blue darken-1" text @click="saveBtn">
-                  Save
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-      </v-main>
-    </v-app>
-  </div>
-  <script>
+				<v-row justify="center">
+					<v-dialog v-model="dialog" persistent max-width="600px">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn color="primary" dark v-bind="attrs" v-on="on">
+								ADICIONAR
+							</v-btn>
+						</template>
+						<v-card>
+							<v-card-title>
+								<span class="text-h5">Novo Contato</span>
+							</v-card-title>
+							<v-card-text>
+								<v-container>
+									<v-form ref="form" v-model="valid" lazy-validation>
+										<v-text-field label="Nome e sobrenome*" required :rules="nameRules" v-model="name">
+										</v-text-field>
+										<v-text-field label="Telefone*" required single-line type="number" :counter="11" :rules="phoneRules"
+											v-model="telefone"></v-text-field>
+									</v-form>
+								</v-container>
+								<small>*indicates required field</small>
+							</v-card-text>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn color="blue darken-1" text @click="closeBtn">
+									Close
+								</v-btn>
+								<v-btn color="blue darken-1" text @click="saveBtn">
+									Save
+								</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
+				</v-row>
+			</v-main>
+		</v-app>
+	</div>
+	<script>
 
-    const context = new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
+		const context = new Vue({
+			el: '#app',
+			vuetify: new Vuetify(),
 
-      // Estado local
-      data() {
-        return {
-          message: 'Hola Mundo',
+			// Estado local
+			data() {
+				return {
+					message: 'Hola Mundo',
+					formContact: {
+						name: '',
+						telefone: '',
+						id: 0,
+					},
 					name: '',
 					telefone: '',
+					isEditing: false,
 					id: 4,
 					dialog: false,
 					phoneRules: [
@@ -114,25 +98,24 @@
 						v => (v && v.length == 11) || 'Phone must be a number equal to 11 characters',
 					],
 					nameRules: [
-        		v => !!v || 'Name is required',
+						v => !!v || 'Name is required',
 						v => {
-							if(v) {
+							if (v) {
 								const wordsList = v.split(" ") || [];
-								const minTwoWordsWith3Characters = (wordsList.length < 2 
+								const minTwoWordsWith3Characters = (wordsList.length < 2
 									|| wordsList[0].length < 3
 									|| wordsList[1].length < 3);
 
-								return !minTwoWordsWith3Characters 
+								return !minTwoWordsWith3Characters
 									|| 'Name must have two words with 3 characters';
 							}
 						},
-      		],
+					],
 					valid: true,
 					headers: [
 						{ text: 'Telefone', value: 'telefone' },
 						{ text: 'Name', value: 'name' },
-						{ text: '', value: 'edit'	},
-						{ text: '', value: 'delete' }
+						{ text: '', value: 'buttons' },
 					],
 					desserts: [
 						{
@@ -156,25 +139,41 @@
 							telefone: 55555555555,
 						},
 					]
-      }
+				}
 
-      },
+			},
 
 			methods: {
-				saveBtn () {
+				saveBtn() {
 					const result = this.$refs.form.validate()
-					console.log(this.desserts)
-					if(result) {
-						this.desserts.push({
-							id: this.id += 1,
-							name: this.name, telefone: this.telefone
-						})
-						this.$refs.form.reset()
+					if (this.formContact.id) {
+
+						const contactToEdit = this.desserts
+							.find((c) => c.id == this.formContact.id);
+
+						const positionContact = this.desserts
+							.findIndex((c) => c.id == this.formContact.id);
+
+						contactToEdit.name = this.name;
+						contactToEdit.telefone = this.telefone;
+						
+						this.desserts[positionContact] = contactToEdit;
+						this.formContact.id = 0;
 						this.dialog = false;
 					}
+					else {
+						this.id += 1
+						this.desserts.push({
+							id: this.id,
+							name: this.name,
+							telefone: this.telefone
+						})
+						this.dialog = false;
+					}
+					this.$refs.form.reset();
 				},
 
-				reset () {
+				reset() {
 					this.$refs.form.reset()
 				},
 
@@ -184,19 +183,26 @@
 				},
 
 				editContact(a) {
-					let result = this.desserts.find((x) => x.id != a.id)
-					this.desserts = result;
+					this.name = a.name;
+					this.telefone = a.telefone;
+					this.formContact = a;
+					this.dialog = true;
 				},
-				
+
 				deleteContact(a) {
 					let result = this.desserts.filter((x) => x.id != a.id)
 					this.desserts = result;
 				}
 			},
 
-      computed: {}
+			watch: {
+				desserts(newValue) {
+				}
+			},
 
-    });
+			computed: {}
 
-  </script>
+		});
+
+	</script>
 </body>
