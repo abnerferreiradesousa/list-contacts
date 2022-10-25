@@ -1,5 +1,7 @@
 # 🚀 Bem vindo a minha aplicação List Contacts! 🚀
 
+![alt text](https://raw.githubusercontent.com/abnerferreiradesousa/list-contacts/main/img.png)
+
 ## 🥱 Introdução...
 
 Um cliente precisa gerenciar uma lista de contatos, onde nome e telefone deverá ser
