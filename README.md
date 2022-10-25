@@ -10,19 +10,23 @@ criados.
 
 ## Defafios que infrentei...  🗡️ 💥 
 
-* 🛡️ Trabalhar sem iniciar um projeto node/npm via CLI.
-* 🥊 Criar uma máscara para o input.
-* ⚔️ Validações e EventHandlers.
+*🛡️ Trabalhar sem iniciar um projeto node/npm via CLI.
+*🥊 Criar uma máscara para o input.
+*⚔️ Validações e EventHandlers.
 
 ## Minhas considerações finais... ✍️
 
-📚 Aprendi a pensar/refletir mais ao me deparar com um problema, no sentido de entender o que está causando aquele situação, ao invés de sair teclando sem rumo. Me ajudando a pensar em soluções mais assertivas e até eficientes.
+📚 Aprendi a pensar/refletir mais ao me deparar com um problema, no sentido de entender o que está causando aquele situação, ao invés de sair teclando sem um norte com o fim de achar a solução por pura tentativa. E isso me ajudou a desenvolver soluções mais assertivas e até mais concisas.
 
 💻 Quero listar as aprendizados em hard skills adquiridos/reforçados: 💻
 
 * 👉 Vuetify
 
+* 👉 JavaScript
+
 * 👉 Tailwind
 
 * 👉 Trabalhar com bibliotecas só usando o link CDN.
+
+* 👉 Boostrap icons.
  
