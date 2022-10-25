@@ -2,7 +2,7 @@
 
 ## 🥱 Introdução...
 
-Contexto: Um cliente precisa gerenciar uma lista de contatos, onde nome e telefone deverá ser
+Um cliente precisa gerenciar uma lista de contatos, onde nome e telefone deverá ser
 armazenado, então, é esperado a criação de uma tela, nessa tela, deverá ter um botão para adicionar,
 onde uma caixa de diálogo para digitar os novos dados deverá ser aberta. Após criar, deverá ser
 possível listar os contatos, excluir ou abrir novamente a caixa de diálogo para editar os contatos já
@@ -10,9 +10,9 @@ criados.
 
 ## Defafios que infrentei...  🗡️ 💥 
 
-*🛡️ Trabalhar sem iniciar um projeto node/npm via CLI.
-*🥊 Criar uma máscara para o input.
-*⚔️ Validações e EventHandlers.
+* 🛡️ Trabalhar sem iniciar um projeto node/npm via CLI, só usando o arquivo ".html".
+* 🥊 Criar uma máscara para o input.
+* ⚔️ Validações e EventHandlers.
 
 ## Minhas considerações finais... ✍️
 
