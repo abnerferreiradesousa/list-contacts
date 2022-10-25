@@ -88,6 +88,7 @@
                               v-model="editedItem.telefone"
                               required
                               placeholder="(xx) x xxxx-xxxx"
+                              @keypress="onlyNumber"
                               @keyup="mascaraParaTelefone"
                               :rules="phoneRules"
                               label="Telefone"
@@ -203,14 +204,18 @@
               ],
               phoneRules: [
                 v => !!v || 'Phone is required',
-                v => {
-                  try {
-                    Number(v) == 'number'
-                  } catch(err) {
-                    return 'Phone number must be a number'
-                  }
-                },
-                v => v.length == 16 || 'Phone must be a number equal to 11 characters',
+                // v => {
+                //     // const dict = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')', '-', ' ', ''];
+                //     // const isValidNumber = v.split('').every((num) => dict.includes(num));
+                //     const isValidNumber = v.split('').every((num) => {
+                //       if ((typeof(v) === 'number') || v === '(' || v === ')' || v === '-' || v === ' ') {
+                //         return v;
+                //       }
+                //     });
+                //     console.log(isValidNumber)
+                //     return !isValidNumber && 'Phone number must be a number'
+                // },
+                v => v.length == 16 || 'Phone must be equal to 11 characters',
               ],
             }),
 
@@ -264,71 +269,84 @@
                 ]
               },
 
+              onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                console.log(keyCode)
+                if (
+                  (keyCode < 48 || keyCode > 57) 
+                  && keyCode !== 40
+                  && keyCode !== 41
+                  && keyCode !== 45
+                  && keyCode !== 32
+                  ) {
+                    $event.preventDefault();
+                }
+              },
+
               rowClass(item) {
-                  console.log("meu", item)
                   const isElevenDDD = item.telefone[1] == 1 && item.telefone[2] == 1;
                   const rowClass = isElevenDDD ? 'blue-ddd' : ""
                   return rowClass;
               },
 
-            mascaraParaTelefone() {
-              if(this.editedItem.telefone && this.editedItem.telefone.length > 0) {
-                console.log(this.editedItem.telefone)
-                const ln = this.editedItem.telefone.split('');
-                const ddd = `(${ln[0]}${ln[1]}) ${ln[2]} `
-                const restNumber = `${ln[3]}${ln[4]}${ln[5]}${ln[6]}-${ln[7]}${ln[8]}${ln[9]}${ln[10]}`
-                const formating = ddd + restNumber;
-                if(this.editedItem.telefone.length == 11) {
-                  this.editedItem.telefone = formating
+              mascaraParaTelefone() {
+                if(this.editedItem.telefone && this.editedItem.telefone.length > 0) {
+                  const ln = this.editedItem.telefone.split('');
+                  const ddd = `(${ln[0]}${ln[1]}) ${ln[2]} `
+                  const restNumber = `${ln[3]}${ln[4]}${ln[5]}${ln[6]}-${ln[7]}${ln[8]}${ln[9]}${ln[10]}`
+                  const formating = ddd + restNumber;
+                  if(this.editedItem.telefone.length == 11) {
+                    this.editedItem.telefone = formating
+                  }
                 }
-              }
-            },
+              },
 
-            editItem (item) {
-              this.editedIndex = this.desserts.indexOf(item)
-              this.editedItem = Object.assign({}, item)
-              this.dialog = true
-            },
+              editItem (item) {
+                this.editedIndex = this.desserts.indexOf(item)
+                this.editedItem = Object.assign({}, item)
+                this.dialog = true
+              },
 
-            deleteItem (item) {
-              this.editedIndex = this.desserts.indexOf(item)
-              this.editedItem = Object.assign({}, item)
-              this.dialogDelete = true
-            },
+              deleteItem (item) {
+                this.editedIndex = this.desserts.indexOf(item)
+                this.editedItem = Object.assign({}, item)
+                this.dialogDelete = true
+              },
 
-            deleteItemConfirm () {
-              this.desserts.splice(this.editedIndex, 1)
-              this.closeDelete()
-            },
+              deleteItemConfirm () {
+                this.desserts.splice(this.editedIndex, 1)
+                this.closeDelete()
+              },
 
-            close () {
-              this.dialog = false
-              this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-              })
-            },
+              close () {
+                this.dialog = false
+                this.$nextTick(() => {
+                  this.editedItem = Object.assign({}, this.defaultItem)
+                  this.editedIndex = -1
+                })
+              },
 
-            closeDelete () {
-              this.dialogDelete = false
-              this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-              })
-            },
+              closeDelete () {
+                this.dialogDelete = false
+                this.$nextTick(() => {
+                  this.editedItem = Object.assign({}, this.defaultItem)
+                  this.editedIndex = -1
+                })
+              },
 
-            save () {
-              const validFields = this.$refs.form.validate();
-              if(validFields) {
-                if (this.editedIndex > -1) {
-                  Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                } else {
-                  this.desserts.push(this.editedItem)
+              save () {
+                const validFields = this.$refs.form.validate();
+                if(validFields) {
+                  if (this.editedIndex > -1) {
+                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                  } else {
+                    this.desserts.push(this.editedItem)
+                  }
+                  this.close()
                 }
-                this.close()
-              }
+              },
             },
-          },
 	});
 
 	</script>
