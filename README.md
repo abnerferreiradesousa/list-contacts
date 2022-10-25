@@ -1,6 +1,6 @@
 # 🚀 Bem vindo a minha aplicação List Contacts! 🚀
 
-![alt text](https://raw.githubusercontent.com/abnerferreiradesousa/list-contacts/main/img.png)
+![alt text](https://raw.githubusercontent.com/abnerferreiradesousa/list-contacts/main/plproj.png)
 
 ## 🥱 Introdução...
 
