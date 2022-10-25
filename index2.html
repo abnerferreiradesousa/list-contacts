@@ -9,22 +9,14 @@
 	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <script src="https://cdn.tailwindcss.com"></script>
-
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: 'red',
-          }
-        }
-      }
-    }
-  </script>
 </head>
+
 <style>
 	@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+  .blue-ddd {
+    background-color: #2610f2;
+  }
 </style>
 
 <body>
@@ -32,19 +24,20 @@
         <v-app>
 			<v-main class="green">
 				<v-container>
-		<template>
+      <template>
             <v-data-table
               :headers="headers"
               :items="desserts"
-              sort-by="calories"
+              :search="search"
+              :item-class="rowClass"
               class="elevation-1"
               dark
-            >
+              >
               <template v-slot:top>
                 <v-toolbar
                   flat
                 >
-                  <v-toolbar-title>LISTA DE CONTATOS</v-toolbar-title>
+                  <v-toolbar-title class="font-weight-black">LISTA DE CONTATOS</v-toolbar-title>
                   <v-divider
                     class="mx-4"
                     inset
@@ -55,7 +48,6 @@
                     v-model="dialog"
                     max-width="500px"
                   >
-                  <!-- color="red lighten-1" -->
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         class="mb-2 green"
@@ -74,7 +66,6 @@
                         <v-container>
 									<v-form ref="form" v-model="valid" lazy-validation>
                           <v-row>
-
                             <v-col
                               cols="12"
                               sm="6"
@@ -96,6 +87,7 @@
                               <v-text-field
                               v-model="editedItem.telefone"
                               required
+                              placeholder="(xx) x xxxx-xxxx"
                               @keyup="mascaraParaTelefone"
                               :rules="phoneRules"
                               label="Telefone"
@@ -150,7 +142,7 @@
                 </v-icon>
                 <v-icon
                   dense
-                  color="green"
+                  color="red lighten-1"
                   @click="deleteItem(item)"
                 >
                   mdi-delete
@@ -211,6 +203,13 @@
               ],
               phoneRules: [
                 v => !!v || 'Phone is required',
+                v => {
+                  try {
+                    Number(v) == 'number'
+                  } catch(err) {
+                    return 'Phone number must be a number'
+                  }
+                },
                 v => v.length == 16 || 'Phone must be a number equal to 11 characters',
               ],
             }),
@@ -240,24 +239,36 @@
                   {
                       id: 1,
                       nome: 'Batman',
-                      telefone: 99999999999,
+                      telefone: "(99) 9 9999-9999",
                   },
                   {
                       id: 2,
                       nome: 'Ichigo',
-                      telefone: 88888888888,
+                      telefone: "(88) 8 8888-8888",
                   },
                   {
                       id: 3,
                       nome: 'Saitama',
-                      telefone: 77777777777,
+                      telefone: "(77) 7 7777-7777",
                   },
                   {
                       id: 4,
                       nome: 'Izuku Midorya',
-                      telefone: 55555555555,
+                      telefone: "(66) 6 6666-6666",
+                  },
+                  {
+                      id: 5,
+                      nome: 'Izuku Midorya',
+                      telefone: "(11) 1 1111-1111",
                   },
                 ]
+              },
+
+              rowClass(item) {
+                  console.log("meu", item)
+                  const isElevenDDD = item.telefone[1] == 1 && item.telefone[2] == 1;
+                  const rowClass = isElevenDDD ? 'blue-ddd' : ""
+                  return rowClass;
               },
 
             mascaraParaTelefone() {
