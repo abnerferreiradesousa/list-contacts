@@ -10,6 +10,23 @@ onde uma caixa de diálogo para digitar os novos dados deverá ser aberta. Após
 possível listar os contatos, excluir ou abrir novamente a caixa de diálogo para editar os contatos já
 criados.
 
+## Como rodar?
+
+  1. Clone o repositório
+
+  - `git clone git@github.com:abnerferreiradesousa/trybesmith.git`.
+  - Entre na pasta do repositório que você acabou de clonar:
+    - `cd trybesmith`
+    - `docker-compose up -d --build`
+
+  2. Instale as dependências
+
+  - `npm install`
+  
+  3. Rodando a aplicação
+
+  - `npm start`
+
 ## Defafios que infrentei...  🗡️ 💥 
 
 * 🛡️ Trabalhar sem iniciar um projeto node/npm via CLI, só usando o arquivo ".html".
